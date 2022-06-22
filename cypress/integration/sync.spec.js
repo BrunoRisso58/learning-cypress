@@ -23,7 +23,6 @@ describe('Esperas...', () => {
     })
 
     it.only('Deve fazer retrys', () => {
-        cy.get('#buttonDelay').click()
         cy.get('#novoCampo')
             .should('not.exist')
             // quando eu garanto que o elemento não existe, não faz sentido ele retornar o mesmo elemento, por isso o should('exist') não funciona
@@ -46,6 +45,24 @@ describe('Esperas...', () => {
             // .should('contain', 'Item 2')
         cy.get('#lista li span')
             .should('contain', 'Item 2')
+    })
+
+    it.only('Uso do timeout', () => {
+        // cy.get('#buttonDelay').click()
+        // ele vai esperar apenas 1 segundo para que o campo apareça, em vez dos 4 segundos padrão
+        // cy.get('#novoCampo', { timeout: 1000 }).should('exist')
+
+        // cy.get('#buttonListDOM').click()
+        // // cy.wait(5000) // pause(5000) do Laravel Dusk. É bom evitar esse wait fixo
+        // // sem o wait daria errado, pois ele esperaria mais que o tempo padrão (4s)
+        // cy.get('#lista li span', { timeout: 30000 })
+        //     .should('contain', 'Item 2')
+
+        cy.get('#buttonListDOM').click()
+        cy.get('#lista li span')
+            .should('have.length', '1') // dá certo pois quando satisfazer essa condição, ele já para
+        cy.get('#lista li span')
+            .should('have.length', '2')
     })
 
 })
