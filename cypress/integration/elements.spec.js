@@ -1,20 +1,20 @@
 /// <reference types="cypress" />
 
 describe('Work with basic elements', () => {
+
+    // Antes de tudo
     before(() => {
         // vai para a página
         cy.visit('https://wcaquino.me/cypress/componentes.html');
     })
 
+    // Antes de cada teste específico
     beforeEach(() => {
-        // vai para a página
+        // recarrega a página
         cy.reload();
     })
 
     it('Text', () => {
-        // vai para a página
-        cy.visit('https://wcaquino.me/cypress/componentes.html');
-
         cy.get('body').should('contain', 'Cuidado'); // não é uma boa estratégia, pois a busca é muito genérica
         cy.get('span').should('contain', 'Cuidado'); // mais específico...
         cy.get('.facilAchar').should('contain', 'Cuidado'); // mais específico ainda...
@@ -22,7 +22,6 @@ describe('Work with basic elements', () => {
     })
 
     it('Links', () => {
-        cy.visit('https://wcaquino.me/cypress/componentes.html');
         cy.get('[href="#"]').click();
         cy.get('#resultado').should('have.text', 'Voltou!');
 
@@ -32,7 +31,7 @@ describe('Work with basic elements', () => {
         cy.get('#resultado').should('have.text', 'Voltou!');
     })
 
-    it.only('TextFields', () => {
+    it('TextFields', () => {
         cy.get('#formNome')
             .type('Cypress Text')
             // .should('have.text', 'Cypress Text') // não funciona pois o texto em um input HTML fica no atributo value
@@ -54,4 +53,21 @@ describe('Work with basic elements', () => {
             .type('Erro{selectall}acerto', { delay: 100 })
             .should('have.value', 'acerto')
     })
+
+    it.only('RadioButton', () => {
+        cy.get('#formSexoFem')
+            .click()
+            .should('be.checked')
+
+        cy.get('#formSexoMasc').should('not.be.checked')
+
+        cy.get('#formSexoMasc')
+            .click()
+            .should('be.checked')
+
+        cy.get('#formSexoFem').should('not.be.checked');
+
+        cy.get('[name="formSexo"]').should('have.length', '2')
+    })
+
 })
