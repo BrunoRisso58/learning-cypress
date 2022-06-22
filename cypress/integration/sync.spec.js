@@ -33,4 +33,19 @@ describe('Esperas...', () => {
             .should('have.value', 'funciona')
     })
 
+    it.only('Uso do find', () => {
+        cy.get('#buttonList').click()
+        cy.get('#lista li')
+            .find('span')
+            .should('contain', 'Item 1')
+        // cy.get('#lista li')
+            // ele só fica retentando o assert e o comando imediato a ele, portanto o find
+            // como eke fez um get #lista li, então ele já fixou a busca no Item 1
+            // quando deu erro, o Item 2 já estava ali mas ele já havia focado no Item 2
+            // .find('span')
+            // .should('contain', 'Item 2')
+        cy.get('#lista li span')
+            .should('contain', 'Item 2')
+    })
+
 })
