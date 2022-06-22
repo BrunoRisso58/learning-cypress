@@ -83,4 +83,10 @@ describe('Work with basic elements', () => {
         cy.get('#formComidaVegetariana').should('be.checked')
     })
 
+    it.only('Combo', () => {
+        cy.get('[data-test=dataEscolaridade]')
+            .select('2graucomp') // o select aceita tanto o value quanto o texto mesmo
+            .should('have.value', '2graucomp') // o should aceita apenas o value da option
+    })
+
 })
