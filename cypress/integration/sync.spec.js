@@ -71,4 +71,15 @@ describe('Esperas...', () => {
             .should('have.value', '1')
     })
 
+    it.only('Should vs Then', () => {
+        // o then só executa quando o get é encontrado, enquanto o should vai executando enquanto o get está sendo procurado
+        // o should sempre retorna o objeto que ele recebeu (ignora o return da função), enquanto o then pode ter seu retorno mudado
+        // se precisar fazer alguma busca, utilize o then em vez do should
+        cy.get('#buttonListDOM').then($el => {
+            expect($el).to.have.length(1)
+            cy.get('#buttonList')
+        }).and('eq', 2)
+            .and('not.have.id', 'buttonListDOM')
+    })
+
 })

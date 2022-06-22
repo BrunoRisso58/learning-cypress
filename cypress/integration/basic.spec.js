@@ -16,6 +16,7 @@ describe('Cypress basics', () => {
         cy.title().should('be.equal', 'Campo de Treinamento');
         cy.title().should('contain', 'Campo'); // o debug é bom para pegar mais detalhes sobre algum ponto
 
+        // isso funcionou pois o cy.title() retorna uma promise, assim como o should
         cy.title().then(title => {
             console.log(title);
         })
