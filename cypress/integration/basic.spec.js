@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe('Cypress basics', () => {
-    it('Should visit a page and assert title', () => {
+    it.only('Should visit a page and assert title', () => {
         // cy é uma variável já criada
         cy.visit('https://wcaquino.me/cypress/componentes.html');
 
@@ -14,7 +14,11 @@ describe('Cypress basics', () => {
         // essa é a forma que iremos usar, pois o cy.title() retorna uma promise
         // o cypress fica tentando verificar a asserção até que o valor do título se transforme no que queremos ou que dê timeout (4s)
         cy.title().should('be.equal', 'Campo de Treinamento');
-        cy.title().should('contain', 'Campo').debug(); // o debug é bom para pegar mais detalhes sobre algum ponto
+        cy.title().should('contain', 'Campo'); // o debug é bom para pegar mais detalhes sobre algum ponto
+
+        cy.title().then(title => {
+            console.log(title);
+        })
 
         // mesma coisa do outro exemplo
         cy.title()
