@@ -89,4 +89,8 @@ describe('Work with basic elements', () => {
             .should('have.value', '2graucomp') // o should aceita apenas o value da option
     })
 
+    it('Combo múltiplo', () => {
+        cy.get('[data-testid=dataEsportes]').select(['natacao', 'Corrida', 'nada']) // para selecionar múltiplos valores, preciso colocá-los em um array (preciso mandar o value para funcionar)
+    })
+
 })
