@@ -25,4 +25,12 @@ describe('Work with alerts', () => {
         }) 
     })
 
+    it.only('Alert com stub', () => {
+        const stub = cy.stub().as('alerta') // mock
+        cy.on('window:alert', stub) // o stub substitui o método que estávamos utilizando
+        cy.get('#alert').click().then(() => {
+            expect(stub.getCall(0)).to.be.calledWith('Alert Simples')
+        })
+    })
+
 })
