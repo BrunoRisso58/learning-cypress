@@ -16,15 +16,29 @@ describe('Cypress basics', () => {
         cy.title().should('be.equal', 'Campo de Treinamento');
         cy.title().should('contain', 'Campo'); // o debug é bom para pegar mais detalhes sobre algum ponto
 
+        let syncTitle;
+
         // isso funcionou pois o cy.title() retorna uma promise, assim como o should
         cy.title().then(title => {
             console.log(title);
+
+            cy.get('#formNome').type(title)
+
+            syncTitle = title;
         })
 
-        // mesma coisa do outro exemplo
-        cy.title()
-            .should('be.equal', 'Campo de Treinamento')
-            .and('contain', 'Campo');
+        cy.get('[data-cy=dataSobrenome]').then($el => {
+            $el.val(syncTitle)
+        })
+
+        cy.get('#elementosForm\\:sugestoes').then($el => {
+            cy.wrap($el).type(syncTitle);
+        })
+
+        // // mesma coisa do outro exemplo
+        // cy.title()
+        //     .should('be.equal', 'Campo de Treinamento')
+        //     .and('contain', 'Campo');
     })
 
     it('Should find and interact with an element', () => {
