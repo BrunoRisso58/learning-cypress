@@ -60,7 +60,7 @@ describe('Work with alerts', () => {
         cy.window().then(win => {
             cy.stub(win, 'prompt').returns('42') // cria um método muito parecido com o real
         })
-        // o comportamento padrão do cypress é dar cancelar o prompt
+        // o comportamento padrão do cypress é cancelar o prompt
         cy.on('window:confirm', msg => {
             expect(msg).to.be.equal('Era 42?')
         })
