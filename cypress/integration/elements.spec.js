@@ -83,14 +83,36 @@ describe('Work with basic elements', () => {
         cy.get('#formComidaVegetariana').should('be.checked')
     })
 
-    it.only('Combo', () => {
+    it('Combo', () => {
         cy.get('[data-test=dataEscolaridade]')
             .select('2graucomp') // o select aceita tanto o value quanto o texto mesmo
             .should('have.value', '2graucomp') // o should aceita apenas o value da option
+
+        cy.get('[data-test=dataEscolaridade]')
+            .select('1graucomp') // o select aceita tanto o value quanto o texto mesmo
+            .should('have.value', '1graucomp') // o should aceita apenas o value da option
+
+        cy.get('[data-test=dataEscolaridade] option')
+            .should('have.length', 8)
+        cy.get('[data-test=dataEscolaridade] option').then($arr => {
+            const values = []
+            $arr.each(function() {
+                values.push(this.innerHTML)
+            })
+            expect(values).to.include.members(["Superior", "Mestrado"])
+        })
     })
 
-    it('Combo múltiplo', () => {
+    it.only('Combo múltiplo', () => {
         cy.get('[data-testid=dataEsportes]').select(['natacao', 'Corrida', 'nada']) // para selecionar múltiplos valores, preciso colocá-los em um array (preciso mandar o value para funcionar)
+        // cy.get('[data-testid=dataEsportes]').should('have.value', ['natacao', 'Corrida', 'nada']) não funciona, pois está tentando comparar arrays diferentes com os mesmos valores
+
+        cy.get('[data-testid=dataEsportes]').then($el => {
+            expect($el.val()).to.be.deep.equal(['natacao', 'Corrida', 'nada'])
+            expect($el.val()).to.have.length(3)
+        })
+
+        cy.get('[data-testid=dataEsportes]').invoke('val').should('eql', ['natacao', 'Corrida', 'nada']) // eql é como se fosse um deep.equal
     })
 
 })
