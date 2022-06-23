@@ -51,4 +51,18 @@ describe('Helpers...', () => {
 
         cy.title().its('length').should('be.equal', 20)
     })
+
+    it.only('Invoke...', () => {
+        const getValue = () => 1;
+        const soma = (a, b) => a + b;
+
+        cy.wrap({ fn: getValue }).invoke('fn').should('be.equal', 1)
+        cy.wrap({ fn: soma }).invoke('fn', 2, 5).should('be.equal', 7)
+
+        cy.get('#formNome').invoke('val', 'Texto via invoke') // utilizando o jquery
+        // cy.window() me dá o objeto window (que me dá controle na tela inteira), que toda página tem
+        cy.window().invoke('alert', 'Dá pra ver?') // exibe um alert com a mensagem do 2° parâmetro
+        cy.get('#resultado')
+            .invoke('html', '<input type="button" value="hacked">')  // injeta um código html no elemento
+    })
 })
